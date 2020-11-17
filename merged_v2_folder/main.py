@@ -8,14 +8,22 @@ root.mainloop()
 
 if(begin.size != -1):
 
-    rootGame = gui.Tk()
-    rootGame.title("Sudoku solver {0}x{0}".format(int(gui.sqrt(begin.size))))
-    data = dt.SudokuDataStruct(begin.size)
-    for i in range(data.No):
-        for j in range(data.No):	
-            data.valueWrite(i,j,0)
+	rootGame = gui.Tk()
+	rootGame.title("Sudoku solver {0}x{0}".format(int(gui.sqrt(begin.size))))
+	data = dt.SudokuDataStruct(begin.size)
+	
+	for i in range(data.No):
+		for j in range(data.No):	
+			data.valueWrite(i,j,0)
 
-    game = gui.Sudoku(rootGame,data,begin.size)
+	game = gui.Sudoku(rootGame,data,begin.size)
 
-    rootGame.mainloop()
+	rootGame.mainloop()
+	
+#	print(data.coordenadasColumna(1))
+#	print(data.coordenadasFila(1))
+	data.rules()
+
+
 """Nunca usen tk"""
+
