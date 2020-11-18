@@ -1,3 +1,6 @@
+from math import sqrt
+
+
 class SudokuDataStruct():
 	def __init__(self, size):
 		self.size  = size
@@ -109,7 +112,39 @@ class SudokuDataStruct():
 			helper.append((i, fila))
 
 		return helper	
+
+	def coordenadasReg(self, col, fila):
 	
+		rcol = int( (col)/sqrt(self.size) )
+		rfila = int( (fila)/sqrt(self.size) )
+		print(col, fila)		
+
+		coordinates = []		
+	
+		for i in range(int(sqrt(self.size))): 
+			for j in range(int(sqrt(self.size))): 
+				
+				position = ( int(i + sqrt(self.size)*rcol), int(j + sqrt(self.size)*rfila))
+
+				if position == (col, fila):
+					continue
+
+				coordinates.append(position)
+
+		return coordinates
+	
+	def regionRule(self, n):
+		
+		#decodifica la letra proposicional dada y
+		#guarda sus valoes codificados en variables de ayuda
+		
+		info = self.decodificaLetra(n)
+		coordinates = info[0]
+		num = info[1]
+	
+		return self.coordenadasReg(coordinates[0], coordinates[1])
+
+
 	def columnRule(self, n):
 		#decodifica la letra proposicional dada y
 		#guarda sus valoes codificados en variables de ayuda
@@ -193,12 +228,16 @@ class SudokuDataStruct():
 		rule = "" 
 
 		for i in self.letters: 
+			
+			#regla de la fila y de la columna juntas con un 'Y'
 			rule += self.rowRule(i)	+ self.columnRule(i) + 'Y'
 			rules.append(rule)
 			rule = ""		
-		
-		for i in rules:
-			print(i)
+			print(self.regionRule(i))
 			print()
+		
+#		for i in rules:
+#			print(i)
+#			print()
 
 
