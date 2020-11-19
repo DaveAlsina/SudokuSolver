@@ -298,7 +298,7 @@ def Inorder(f):
 		return "(" + Inorder(f.left) + f.label + Inorder(f.right) + ")"
 
 def String2Tree(A):
-    letrasProposicionales=[chr(x) for x in range(97, 123)]
+    letrasProposicionales=[chr(x) for x in range(256, 1000)]
     Conectivos = ['O','Y','>','=']
     Pila = []
     for c in A:
