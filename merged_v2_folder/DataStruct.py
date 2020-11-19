@@ -274,8 +274,48 @@ class SudokuDataStruct():
 			else:
 				rule += i + 'Y'
 
-		print(rule)
+		return rule
 
+
+# =====================================================================================================0
+#                   Funciones para las reglas
+# ==============================================================================================00000
+class Tree(object):
+	def __init__(self, label, left, right):
+		self.left = left
+		self.right = right
+		self.label = label
+
+def Inorder(f):
+    # Imprime una formula como cadena dada una formula como arbol
+    # Input: tree, que es una formula de logica proposicional
+    # Output: string de la formula
+	if f.right == None:
+		return f.label
+	elif f.label == '-':
+		return f.label + Inorder(f.right)
+	else:
+		return "(" + Inorder(f.left) + f.label + Inorder(f.right) + ")"
+
+def String2Tree(A):
+    letrasProposicionales=[chr(x) for x in range(97, 123)]
+    Conectivos = ['O','Y','>','=']
+    Pila = []
+    for c in A:
+        if c in letrasProposicionales:
+            Pila.append(Tree(c,None,None))
+        elif c=='-':
+            FormulaAux = Tree(c,None,Pila[-1])
+            del Pila[-1]
+            Pila.append(FormulaAux)
+        elif c in Conectivos:
+            FormulaAux = Tree(c,Pila[-1],Pila[-2])
+            del Pila[-1]
+            del Pila[-1]
+            Pila.append(FormulaAux)
+        else:
+            print(u"Hay un problema: el símbolo " + str(c)+ " no se reconoce")
+    return Pila[-1]
 
 
 #	print (rules)
