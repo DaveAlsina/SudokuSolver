@@ -275,6 +275,9 @@ class SudokuDataStruct():
 				rule += i + 'Y'
 
 		print(rule)
+
+
+
 #	print (rules)
 
 #		for i in rules:
