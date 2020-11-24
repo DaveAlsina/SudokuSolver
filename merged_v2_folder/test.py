@@ -1,16 +1,41 @@
-# -*- coding: utf-8 -*-
+class Tree(object):
+	def __init__(self, label, left, right):
+		self.left = left
+		self.right = right
+		self.label = label
 
-# Subrutinas para la transformacion de una
-# formula a su forma clausal
+def Inorder(f):
+    # Imprime una formula como cadena dada una formula como arbol
+    # Input: tree, que es una formula de logica proposicional
+    # Output: string de la formula
+	if f.right == None:
+		return f.label
+	elif f.label == '-':
+		return f.label + Inorder(f.right)
+	else:
+		return "(" + Inorder(f.left) + f.label + Inorder(f.right) + ")"
 
-# Subrutina de Tseitin para encontrar la FNC de
-# la formula en la pila
-# Input: A (cadena) de la forma
-#                   p=-q
-#                   p=(qYr)
-#                   p=(qOr)
-#                   p=(q>r)
-# Output: B (cadena), equivalente en FNC
+def String2Tree(A):
+    #letrasProposicionales=[chr(x) for x in range(256, 1000)]
+    letrasProposicionales=['p','q','r','s','t']
+    Conectivos = ['O','Y','>','=']
+    Pila = []
+    for c in A:
+        if c in letrasProposicionales:
+            Pila.append(Tree(c,None,None))
+        elif c=='-':
+            FormulaAux = Tree(c,None,Pila[-1])
+            del Pila[-1]
+            Pila.append(FormulaAux)
+        elif c in Conectivos:
+            FormulaAux = Tree(c,Pila[-1],Pila[-2])
+            del Pila[-1]
+            del Pila[-1]
+            Pila.append(FormulaAux)
+        else:
+            print(u"Hay un problema: el símbolo " + str(c)+ " no se reconoce")
+    return Pila[-1]
+
 def enFNC(A):
     assert(len(A)==4 or len(A)==7), u"Fórmula incorrecta!"
     B = ''
@@ -38,15 +63,8 @@ def enFNC(A):
         r = A[5]
         # print('r', r)
         B = q+"O"+p+"Y-"+r+"O"+p+"Y-"+q+"O"+r+"O-"+p
-    elif "=" in A:
-        q = A[3]
-        # print('q', q)
-        r = A[5]
-        # print('r', r)
-        #qO-rO-pY-qOrO-pY-qO-rOpYqOrOp
-        B = q+"O"+"-"+r+"O"+"-"+p+"Y"+"-"+q+"O"+r+"O"+"-"+p+"Y"+"-"+q+"O"+"-"+r+"O"+p+"Y"+q+"O"+r+"O"+p
     else:
-        print(u'Error enENC(): Fórmula incorrecta!')
+        print(u'Error enENC(): ama me da amsiedad!')
 
     return B
 
@@ -109,46 +127,13 @@ def Tseitin(A, letrasProposicionalesA, letrasProposicionalesB):
 
     return B
 
-
-# Subrutina Clausula para obtener lista de literales
-# Input: C (cadena) una clausula
-# Output: L (lista), lista de literales
-# Se asume que cada literal es un solo caracter
-def Clausula(C):
-
-    L = [] #lista de literales
-    while(len(C) > 0):
-        s = C[0]
-
-        if (s == '-'):
-            L.append(s + C[1])
-            C = C[3:]
-
-        else:
-            L.append(s)
-            C = C[2:]
-
-    return L
-
-# Algoritmo para obtencion de forma clausal
-# Input: A (cadena) en notacion inorder en FNC
-# Output: L (lista), lista de listas de literales
-def formaClausal(A):
-
-    l = []
-    i = 0
-
-    while(len(A) > 0):
-
-        if i >= len(A):
-                l.append(Clausula(A))
-                A = []
-        else:
-            if A[i] == 'Y':
-                l.append(Clausula(A[:i]))
-                A = A[i+1 : ]
-                i = 0
-            else:
-                i += 1
-
-    return l
+letrasProposicionalesa=['p','q','r','s','t']
+letrasProposicionalesb=['a','b','c','d','e']
+formula = "(Ŀ=(-(ĻO(įOī))Y(-(ĻO(ķOĳ))Y-(įO(ğOď))))"
+string = "pqYs="
+tree = String2Tree(string)
+print(tree)
+inorder = Inorder(tree)
+print(inorder)
+tseitin = Tseitin(inorder, letrasProposicionalesa, letrasProposicionalesb)
+print(tseitin)

@@ -1,3 +1,5 @@
+letrasProposicionales = [chr(x) for x in range(256, 6000)]
+
 def hay_unidad(S):
 	"""Busca las unidades (atomos solos)
 	dentro de S.
@@ -127,17 +129,17 @@ def dpll(S,I):
 			return dpll(Scopy,Icopy)
 
 
-letrasProposicionales = ['p', 'q', 'r','s','t']
+#letrasProposicionales = ['p', 'q', 'r','s','t']
 #S = [['p', 'q'], ['r'], ['q', '-r']]
 #S=[['p','q'],['r','s'],['-r','-s']]
 #S = [['-p'], ['-q'], ['-r','p','q'], ['r']]
-S = [['p','q','-r'],['r','s','t'],['t'],['p','s'],['q','-p']]
+#S = [['p','q','-r'],['r','s','t'],['t'],['p','s'],['q','-p']]
 
-I = {}
+#I = {}
 
-for atom in letrasProposicionales:
-	I[atom] = False
+#for atom in letrasProposicionales:
+#	I[atom] = False
 
-print(S)
-S, I = dpll(S,I)
-print(S,I)
+#print(S)
+#S, I = dpll(S,I)
+#print(S,I)
