@@ -1,10 +1,13 @@
 from math import sqrt
-
+from dpll import *
 
 class SudokuDataStruct():
-	def __init__(self, size):
+	def __init__(self, size ,regla=[]):
 		self.size  = size
 		self.data, self.letters = self.datastruct()
+		#self.regla = self.regla_final(regla)
+		self.regla = regla
+		#print(self.regla, self.data, self.letters)
 
 	def datastruct(self):
 		nums = [n for n in range(self.size)]
@@ -55,7 +58,7 @@ class SudokuDataStruct():
 	def decodifica(self, n, Nf, Nc): #n es un numero
 		# Funcion que codifica un caracter en su respectiva fila f y columna c de la tabla
 
-		msg = 'Codigo incorrecto! Debe estar entre 0 y' + str(self.size * self.size - 1) + "\nSe recibio " + str(n)
+		msg = 'Codigo incorrecto! Debe estar entre 0 y ' + str(self.size * self.size - 1) + "\nSe recibio " + str(n)
 		assert((n >= 0) and (n <= Nf * Nc - 1)), msg
 
 		f = int(n / Nc)
@@ -88,13 +91,48 @@ class SudokuDataStruct():
 				if j == chr(numCode+256):
 					self.data[j] = True
 
+	def regla_final(self, regla):
+		initial = True
+		lst = []
+		for i in range(len(regla)):
+			if not initial:
+				lst.append(lst1)
+			lst1 = []
+			for j in range(len(regla[i])):
+				if initial:
+					initial = False
+				a = regla[i][j]
+				if a not in self.letters:
+					neg = False
+					if a[0] == '-':
+						a = a[1]
+						neg = True
+					a = ord(a) - 256
+					a = chr(a)
+					if neg:
+						a = '-' + a
+				lst1.append(a)
+
+
+		return lst
+
+
 	def solve(self):
 		lst = []
-		for i in self.data:
+
+		A = ""
+		A , self.data = DPLL(self.regla, self.data)
+		#print(A ,self.data)
+
+		print(A)
+		true_letters = [i for i in self.data if i in self.letters]
+
+		for i in true_letters:
 			if self.data[i]== True:
 				(x,y),num = self.decodificaLetra(i)
 				lst.append(((x,y),num))
 
+		print(lst)
 		return lst
 
 	def coordenadasColumna(self, col):
@@ -171,6 +209,7 @@ class SudokuDataStruct():
 
 
 		rule += "-"
+		rule += n + ">"
 		return rule
 
 
@@ -210,6 +249,7 @@ class SudokuDataStruct():
 				rule += charNumCode  + 'O'
 
 		rule += "-"
+		rule += n + ">"
 		return rule
 
 
@@ -248,8 +288,47 @@ class SudokuDataStruct():
 
 
 		rule += "-"
+		rule += n + ">"
 		return rule
 
+	def cellRule(self):
+
+		coords = []
+		first = True
+		second = True
+
+
+		for coordx in range(self.size):
+			for coordy in range(self.size):
+				coords.append((coordx,coordy))
+
+		rule = ""
+		complete_rule = ""
+
+		for i in coords:
+			for num in range(self.size):
+				coordCode = self.codifica(i[0], i[1],self.size, self.size)
+				numCode = self.codifica(coordCode, num, self.size**2, self.size)
+				charNumCode = chr( numCode + 256 )
+
+				if first:
+					rule += charNumCode
+					first = False
+				else:
+					rule += charNumCode  + 'O'
+
+			if second:
+				complete_rule += rule
+				second = False
+
+			else:
+				complete_rule += rule + 'Y'
+
+			first = True
+			rule = ""
+
+		#print(complete_rule)
+		return complete_rule
 
 	def rules(self):
 

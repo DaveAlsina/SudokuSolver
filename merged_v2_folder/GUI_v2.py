@@ -2,7 +2,7 @@ from tkinter import*
 from math import sqrt
 
 class Sudoku:
-    def __init__(self, root,dic, size,squareDim=35):
+    def __init__(self, root,dic,size,squareDim=35):
 
         #coordenadas por defecto al inicializar
         self.cordx = 10
@@ -80,7 +80,7 @@ class Sudoku:
         cond2 =  (1<= posx <=self.sz) and (1<= posy <=self.sz)  #Si está clicando en una de las casillas del sudoku
 
         if ( cond1 and cond2 ):
-            print("Todo en orden -> ", "casilla: ", "(" , posx , "," , posy ,")")
+            #print("Todo en orden -> ", "casilla: ", "(" , posx , "," , posy ,")")
 
             #sobreescritura de valores de posiciones 'cordx', 'cordy'
             #lo cual permite tomar entradas de numeros desde el teclado y modificar la interfaz
@@ -101,7 +101,7 @@ class Sudoku:
 
             """****punto de conexión con la estructura de datos****"""
             self.dic.valueWrite( self.cordx-1, self.cordy -1 )
-            print("borrado en  el dict")
+            #print("borrado en  el dict")
 
             self.writeinGUI("del")
 
@@ -109,7 +109,7 @@ class Sudoku:
 
             """****punto de conexión con la estructura de datos****"""
             self.dic.valueWrite(self.cordx-1, self.cordy -1, int(event.char)- 1 )
-            print("escritura en el dict en:", "casilla: ", "(" , self.cordx , "," , self.cordy, ")", event.char, operation)
+            #print("escritura en el dict en:", "casilla: ", "(" , self.cordx , "," , self.cordy, ")", event.char, operation)
 
             #ejecuta funcion que marca el numero seleccionado
             self.writeinGUI(event.char)
@@ -122,7 +122,7 @@ class Sudoku:
         #busca la coordenada x  y y del punto medio de la celda clicada por última vez
         x = ( 10 + (self.cordx * self.squaredim) - (self.squaredim)/2 )
         y = ( 10 + (self.cordy * self.squaredim) - (self.squaredim)/2 )
-        print(int(x/self.squaredim) + 1, int(y/self.squaredim) + 1)
+        print("coordenada x=",int(x/self.squaredim) + 1, "coordenada y=",int(y/self.squaredim) + 1 ,"numer0 =", order)
 
         #identificador del texto que va a ser creado
         tag = str(x) + str(y) #misteriosamente si se cambia el tag todo falla
@@ -154,16 +154,17 @@ class Sudoku:
 
         solution = self.dic.solve()
 
-        for numAndCoord in solution:
-            coord = numAndCoord[0]
-            num = numAndCoord[1] +1
+        if solution != []:
+            for numAndCoord in solution:
+                coord = numAndCoord[0]
+                num = numAndCoord[1] +1
 
-            self.cordx = coord[0] + 1
-            self.cordy = coord[1] + 1
-            self.writeinGUI(num)
+                self.cordx = coord[0] + 1
+                self.cordy = coord[1] + 1
+                self.writeinGUI(num)
 
-
-        print("WINTER IS COMMING")
+        else:
+            print("El sudoku no tiene una solucion para este caso")
 
     def clearCells(self):
         """****punto de conexión con la estructura de datos****"""

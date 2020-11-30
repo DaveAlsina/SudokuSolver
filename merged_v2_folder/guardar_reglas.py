@@ -43,6 +43,7 @@ dts = R.SudokuDataStruct(4)
 regla_polaca_columna = ""
 regla_polaca_fila = ""
 regla_polaca_region = ""
+regla_polaca_celda = dts.cellRule()
 initial = True
 for i in dts.letters:
     if initial:
@@ -56,7 +57,8 @@ for i in dts.letters:
         regla_polaca_columna += dts.columnRule(i) + "Y"
 
 letrasProposicionalesA = dts.letters # Modificar de acuerdo a reglas
-letrasProposicionalesB = [chr(x) for x in range(1000, 2000)] # Modificar de acuerdo a reglas
+let = len(dts.letters) + 256
+letrasProposicionalesB = [chr(x) for x in range(let,let + 1000)] # Modificar de acuerdo a reglas
 guardar_polaca(regla_polaca_fila, 'regla_fila', letrasProposicionalesA, letrasProposicionalesB)
 
 letrasProposicionalesB = [chr(x) for x in range(2000, 3000)] # Modificar de acuerdo a reglas
@@ -64,6 +66,9 @@ guardar_polaca(regla_polaca_region, 'regla_region', letrasProposicionalesA, letr
 
 letrasProposicionalesB = [chr(x) for x in range(3000, 4000)] # Modificar de acuerdo a reglas
 guardar_polaca(regla_polaca_columna, 'regla_columna', letrasProposicionalesA, letrasProposicionalesB)
+
+letrasProposicionalesB = [chr(x) for x in range(4000, 5000)] # Modificar de acuerdo a reglas
+guardar_polaca(regla_polaca_celda, 'regla_celda', letrasProposicionalesA, letrasProposicionalesB)
 
 print("Finalizado!")
 

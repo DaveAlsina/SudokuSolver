@@ -1,12 +1,11 @@
-#letrasProposicionales = ['p', 'q', 'r','s', 'y']
+letrasProposicionales = ['p', 'q', 'r','s', 'y']
 
 def complemento(letra):
     if len(letra) == 1:
         complemento = '-' + letra
         return complemento
-    elif (len(letra) > 1):
-        if (letra[0] == '-'):
-            return letra[1]
+    elif (letra[0] == '-'):
+        return letra[1]
     else:
         # print(f"error, literal invalido {letra}")
         raise(f"error, literal invalido {letra}")
@@ -49,12 +48,11 @@ def DPLL(S,I):
         # print(I.keys())
         for x in S:
             for y in x:
+                # print(y)
                 if y not in I.keys():
                     l = y
                     break
         # print("l = ", l)
-
-        l = S[0][0]
         S2 = [x for x in S if l not in x]
         Comple = complemento(l)
         count = 0
