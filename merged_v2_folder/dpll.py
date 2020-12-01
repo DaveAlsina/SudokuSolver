@@ -47,12 +47,6 @@ def DPLL(S,I):
 
     else:
         # print(I.keys())
-        for x in S:
-            for y in x:
-                if y not in I.keys():
-                    l = y
-                    break
-        # print("l = ", l)
 
         l = S[0][0]
         S2 = [x for x in S if l not in x]

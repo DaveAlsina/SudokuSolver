@@ -19,8 +19,8 @@ if(begin.size != -1):
 	with open('regla_celda.json', 'r') as file:
 	    regla_celda = json.load(file)
 
-	#regla = regla_fila + regla_region + regla_columna + regla_celda
-	regla = regla_columna + regla_celda
+	regla = regla_celda + regla_region + regla_columna + regla_fila
+	#regla = regla_columna + regla_celda
 	#regla= regla_region
 	#regla = regla_fila
 	#regla = regla_celda

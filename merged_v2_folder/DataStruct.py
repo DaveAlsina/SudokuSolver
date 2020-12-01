@@ -74,6 +74,7 @@ class SudokuDataStruct():
 
 	def valueWrite(self , x , y , num = -1):
 
+		print(x,y,num)
 		if num == -1 :
 			for i in range(self.No):
 				coordinatesCode = self.codifica(x, y, self.size, self.size)
@@ -85,43 +86,35 @@ class SudokuDataStruct():
 
 		else:
 			coordinatesCode = self.codifica(x, y, self.size, self.size)
-			numCode = self.codifica( coordinatesCode, num , self.size**2 , self.No)
+			for numero in range(self.size):
+				numCode = self.codifica( coordinatesCode, numero , self.size**2 , self.No)
+				for j in list(self.data.keys()):
+					if j == chr(numCode+256):
+						self.data[j] = False
 
+			numCode = self.codifica( coordinatesCode, num , self.size**2 , self.No)
 			for j in list(self.data.keys()):
 				if j == chr(numCode+256):
 					self.data[j] = True
 
-	def regla_final(self, regla):
-		initial = True
-		lst = []
-		for i in range(len(regla)):
-			if not initial:
-				lst.append(lst1)
-			lst1 = []
-			for j in range(len(regla[i])):
-				if initial:
-					initial = False
-				a = regla[i][j]
-				if a not in self.letters:
-					neg = False
-					if a[0] == '-':
-						a = a[1]
-						neg = True
-					a = ord(a) - 256
-					a = chr(a)
-					if neg:
-						a = '-' + a
-				lst1.append(a)
-
-
-		return lst
+		#print(self.data)
 
 
 	def solve(self):
 		lst = []
+		regla_dpll = []
+
+		for key, value in self.data.items():
+			lst2 = []
+			if value == True:
+				lst2.append(key)
+			regla_dpll += lst2
+
+		regla_dpll += self.regla
 
 		A = ""
-		A , self.data = DPLL(self.regla, self.data)
+		A , self.data = DPLL(regla_dpll, self.data)
+		regla_dpll = []
 		#print(A ,self.data)
 
 		print(A)
@@ -132,8 +125,8 @@ class SudokuDataStruct():
 				(x,y),num = self.decodificaLetra(i)
 				lst.append(((x,y),num))
 
-		print(lst)
-		return lst
+		#print(lst)
+		return lst, A
 
 	def coordenadasColumna(self, col):
 		helper = []

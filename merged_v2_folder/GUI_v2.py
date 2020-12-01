@@ -28,6 +28,8 @@ class Sudoku:
         self.solve = Button(root, text = "Solve", command = self.solveSudoku) #boton para solucionar el sudoku
         self.solve.pack()
 
+
+
         self.solve = Button(root, text = "Clear all", command = self.clearCells) #boton de refrescar sudoku
         self.solve.pack()
 
@@ -152,7 +154,8 @@ class Sudoku:
         #[antes de eso necesito una función que me envie una lista de listas con la tupla (x,y) y el numero]
         #[ ((x,y), NUM), ((x,y), NUM)]
 
-        solution = self.dic.solve()
+        print("solving... this can take a while... :)")
+        solution , A = self.dic.solve()
 
         if solution != []:
             for numAndCoord in solution:
@@ -165,6 +168,14 @@ class Sudoku:
 
         else:
             print("El sudoku no tiene una solucion para este caso")
+
+
+        if A == "Satisfacible":
+            A = '¡¡' + "Satisfiable" + '!!'
+            self.solve = Label(self.game, text=A , fg="Green" ).pack()
+        else:
+            A = '¡¡' + "Unsatisfiable" + '!!'
+            self.solve = Label(self.game, text=A , fg="Red" ).pack()
 
     def clearCells(self):
         """****punto de conexión con la estructura de datos****"""
@@ -187,11 +198,16 @@ class StartWindows():
 
     def startMenu(self):
         self.root.title("Sudoku solver")
-        self.root.geometry("300x300")
+        self.root.geometry("400x325")
 
         Label(self.root, text= "What sudoku size do you want?",font=("Agency FB", 18)).pack()
+        Label(self.root, text= ' ',font=("Agency FB", 18)).pack()
         Button(self.root, text="2 x 2",command= lambda: self.endStart(4), font=("Agency FB", 18)).pack()
         Button(self.root, text="3 x 3",command= lambda: self.endStart(9), font=("Agency FB", 18)).pack()
+        Label(self.root, text= ' ',font=("Agency FB", 18)).pack()
+        Label(self.root, text= 'Remember:',font=("Agency FB", 18)).pack()
+        Label(self.root, text= 'Run "Guardar_reglas_2x2.py" to use 2x2 sudoku',font=("Agency FB", 18)).pack()
+        Label(self.root, text= 'Run "Guardar_reglas_3x3.py" to use 3x3 sudoku',font=("Agency FB", 18)).pack()
 
     def endStart(self,sz):
         self.size = sz
