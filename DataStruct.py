@@ -2,6 +2,7 @@ from math import sqrt
 from dpll import *
 
 class SudokuDataStruct():
+
 	def __init__(self, size ,regla=[]):
 		self.size  = size
 		self.data, self.letters = self.datastruct()
