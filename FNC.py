@@ -11,6 +11,7 @@
 #                   p=(qOr)
 #                   p=(q>r)
 # Output: B (cadena), equivalente en FNC
+
 def enFNC(A):
     assert(len(A)==4 or len(A)==7), u"Fórmula incorrecta!"
     B = ''
