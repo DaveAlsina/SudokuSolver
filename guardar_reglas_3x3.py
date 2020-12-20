@@ -45,6 +45,7 @@ regla_polaca_fila = ""
 regla_polaca_region = ""
 regla_polaca_celda = dts.cellRule()
 initial = True
+
 for i in dts.letters:
     if initial:
         regla_polaca_fila += dts.rowRule(i)
