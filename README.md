@@ -25,4 +25,4 @@ Por cada ejecución recuerde oprimir _'clear all'_, si se producen errores, pare
 y reincie el programa.
 
 Una demostración del algoritmo en funcionamiento se encuentra en este video: 
-[Video](https://youtu.be/_lh96gc0Qpc) :point_left:
+[Video](https://www.youtube.com/watch?v=_lh95gc0Qpc&t=0s) :point_left:
