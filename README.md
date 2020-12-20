@@ -23,3 +23,6 @@ _verde_  **'Satisfiable'** y rellenará el recuadro de sudoku, de lo contrario p
 
 Por cada ejecución recuerde oprimir _'clear all'_, si se producen errores, pare la ejecución con 'CNTRL + C' 
 y reincie el programa.
+
+Una demostración del algoritmo en funcionamiento se encuentra en este video: 
+[Video](https://youtu.be/_lh96gc0Qpc) :point_left:
